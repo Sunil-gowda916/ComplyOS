@@ -1,0 +1,41 @@
+# Versioned rule store. Every rule records where it comes from and when it applies.
+# Rules are data, not code: a rule change means a new version here, not a code rewrite.
+# IMPORTANT: fill every `source_ref` from the official CBIC / GST Council notification
+# before relying on a rule. Entries marked VERIFY have not been checked yet.
+
+rules:
+  - id: V01
+    version: 1
+    description: Required invoice fields are present
+    params: {fields: [supplier_gstin, invoice_no, invoice_date, taxable_value, total]}
+    source_ref: "CGST Rules, Rule 46 (tax invoice contents) - VERIFY exact clauses"
+    effective_from: 2017-07-01
+
+  - id: V02
+    version: 1
+    description: GSTIN pattern and mod-36 check digit
+    params: {}
+    source_ref: "GSTIN structure as published by GSTN - VERIFY"
+    effective_from: 2017-07-01
+
+  - id: V06
+    version: 1
+    description: Intra-state supply -> CGST + SGST; inter-state -> IGST
+    params: {}
+    source_ref: "IGST Act s.7-8 (inter/intra-state supply) - VERIFY"
+    effective_from: 2017-07-01
+
+  - id: V07
+    version: 1
+    description: Effective GST rate is in the valid slab set (warning only; exact rate needs HSN)
+    params: {slabs_percent: [0, 0.25, 3, 5, 12, 18, 28]}
+    source_ref: "VERIFY: rate notifications in force before the Sept 2025 rationalisation"
+    effective_from: 2017-07-01
+    effective_to: 2025-09-21
+
+  - id: V07
+    version: 2
+    description: Effective GST rate is in the valid slab set after rate rationalisation
+    params: {slabs_percent: [0, 0.25, 3, 5, 18, 40]}
+    source_ref: "VERIFY: 56th GST Council meeting outcome and CBIC rate notifications"
+    effective_from: 2025-09-22
